@@ -1,0 +1,45 @@
+syntax = "proto3";
+package proto;
+option go_package = "./proto";
+
+
+message RegisterNotifyReq {
+  repeated string event = 1;
+}
+message RegisterNotifyResp{}
+
+message GetPluginInfoReq {
+
+}
+message GetPluginInfoResp {
+  PluginInfo info = 1;
+}
+message PluginInfo {
+  Version version = 1;
+  string author = 2;
+  string name = 3;
+  string description = 4;
+}
+message Version {
+  uint32 major = 1;
+  uint32 minor = 2;
+  uint32 patch = 3;
+}
+
+message PlayerInfo {
+
+}
+message GetPlayerInfoReq {
+  string user_id = 1;
+}
+message GetPlayerInfoResp {
+  PluginInfo info = 1;
+}
+
+service Card {
+  rpc GetPlayerInfo(GetPluginInfoReq) returns(GetPlayerInfoResp);
+  rpc RegisterNotify(RegisterNotifyReq) returns (RegisterNotifyResp);
+}
+service Plugin {
+  rpc GetPluginInfo(GetPluginInfoReq) returns(GetPluginInfoResp);
+}
