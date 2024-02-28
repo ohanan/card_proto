@@ -1,18 +1,19 @@
 syntax = "proto3";
 package proto;
+
 option go_package = "./proto";
-
-
-message RegisterNotifyReq {
-  repeated string event = 1;
+message RegisterNotify {
+  message Req {
+    repeated string event = 1;
+  }
+  message Resp {}
 }
-message RegisterNotifyResp{}
 
-message GetPluginInfoReq {
-
-}
-message GetPluginInfoResp {
-  PluginInfo info = 1;
+message GetPluginInfo {
+  message Req {}
+  message Resp {
+    PluginInfo info = 1;
+  }
 }
 message PluginInfo {
   Version version = 1;
@@ -26,20 +27,19 @@ message Version {
   uint32 patch = 3;
 }
 
-message PlayerInfo {
-
+message PlayerInfo {}
+message GetPlayerInfo {
+  message Req {
+    string user_id = 1;
+  }
+  message Resp {
+    PlayerInfo info = 1;
+  }
 }
-message GetPlayerInfoReq {
-  string user_id = 1;
-}
-message GetPlayerInfoResp {
-  PluginInfo info = 1;
-}
-
 service Card {
-  rpc GetPlayerInfo(GetPluginInfoReq) returns(GetPlayerInfoResp);
-  rpc RegisterNotify(RegisterNotifyReq) returns (RegisterNotifyResp);
+  rpc GetPlayerInfo(GetPlayerInfo.Req) returns (GetPlayerInfo.Resp);
+  rpc RegisterNotify(RegisterNotify.Req) returns (RegisterNotify.Resp);
 }
 service Plugin {
-  rpc GetPluginInfo(GetPluginInfoReq) returns(GetPluginInfoResp);
+  rpc GetPluginInfo(GetPluginInfo.Req) returns (GetPluginInfo.Resp);
 }

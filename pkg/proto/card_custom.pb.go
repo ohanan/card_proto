@@ -14,22 +14,24 @@ type CardXClient struct {
 func NewCardXClient(c CardClient) *CardXClient {
 	return &CardXClient{c: c}
 }
-func (x CardXClient) GetPlayerInfo() *GetPlayerInfoResp {
-	r, err := x.c.GetPlayerInfo(context.Background(), &GetPluginInfoReq{})
+func (x CardXClient) GetPlayerInfo(userId string) *GetPlayerInfo_Resp {
+	r, err := x.c.GetPlayerInfo(context.Background(), &GetPlayerInfo_Req{
+		UserId: userId,
+	})
 	if err != nil {
 		panic(err)
 	}
 	return r
 }
-func (x CardXClient) GetPlayerInfo0(req *GetPluginInfoReq) *GetPlayerInfoResp {
+func (x CardXClient) GetPlayerInfo0(req *GetPlayerInfo_Req) *GetPlayerInfo_Resp {
 	r, err := x.c.GetPlayerInfo(context.Background(), req)
 	if err != nil {
 		panic(err)
 	}
 	return r
 }
-func (x CardXClient) RegisterNotify(event []string) *RegisterNotifyResp {
-	r, err := x.c.RegisterNotify(context.Background(), &RegisterNotifyReq{
+func (x CardXClient) RegisterNotify(event []string) *RegisterNotify_Resp {
+	r, err := x.c.RegisterNotify(context.Background(), &RegisterNotify_Req{
 		Event: event,
 	})
 	if err != nil {
@@ -37,7 +39,7 @@ func (x CardXClient) RegisterNotify(event []string) *RegisterNotifyResp {
 	}
 	return r
 }
-func (x CardXClient) RegisterNotify0(req *RegisterNotifyReq) *RegisterNotifyResp {
+func (x CardXClient) RegisterNotify0(req *RegisterNotify_Req) *RegisterNotify_Resp {
 	r, err := x.c.RegisterNotify(context.Background(), req)
 	if err != nil {
 		panic(err)
@@ -46,8 +48,8 @@ func (x CardXClient) RegisterNotify0(req *RegisterNotifyReq) *RegisterNotifyResp
 }
 
 type CardXServer interface {
-	GetPlayerInfo(req *GetPluginInfoReq, resp *GetPlayerInfoResp)
-	RegisterNotify(req *RegisterNotifyReq, resp *RegisterNotifyResp)
+	GetPlayerInfo(req *GetPlayerInfo_Req, resp *GetPlayerInfo_Resp)
+	RegisterNotify(req *RegisterNotify_Req, resp *RegisterNotify_Resp)
 }
 
 func NewCardClientFromServer(x CardServer) CardClient {
@@ -56,10 +58,10 @@ func NewCardClientFromServer(x CardServer) CardClient {
 
 type cardClientByServer struct{ s CardServer }
 
-func (x cardClientByServer) GetPlayerInfo(ctx context.Context, req *GetPluginInfoReq, opts ...grpc.CallOption) (*GetPlayerInfoResp, error) {
+func (x cardClientByServer) GetPlayerInfo(ctx context.Context, req *GetPlayerInfo_Req, opts ...grpc.CallOption) (*GetPlayerInfo_Resp, error) {
 	return x.s.GetPlayerInfo(ctx, req)
 }
-func (x cardClientByServer) RegisterNotify(ctx context.Context, req *RegisterNotifyReq, opts ...grpc.CallOption) (*RegisterNotifyResp, error) {
+func (x cardClientByServer) RegisterNotify(ctx context.Context, req *RegisterNotify_Req, opts ...grpc.CallOption) (*RegisterNotify_Resp, error) {
 	return x.s.RegisterNotify(ctx, req)
 }
 func NewCardServerFromXServer(server CardXServer) *CardXServerAdapter {
@@ -70,13 +72,13 @@ type CardXServerAdapter struct {
 	Server CardXServer
 }
 
-func (x CardXServerAdapter) GetPlayerInfo(ctx context.Context, req *GetPluginInfoReq) (*GetPlayerInfoResp, error) {
-	resp := &GetPlayerInfoResp{}
+func (x CardXServerAdapter) GetPlayerInfo(ctx context.Context, req *GetPlayerInfo_Req) (*GetPlayerInfo_Resp, error) {
+	resp := &GetPlayerInfo_Resp{}
 	x.Server.GetPlayerInfo(req, resp)
 	return resp, nil
 }
-func (x CardXServerAdapter) RegisterNotify(ctx context.Context, req *RegisterNotifyReq) (*RegisterNotifyResp, error) {
-	resp := &RegisterNotifyResp{}
+func (x CardXServerAdapter) RegisterNotify(ctx context.Context, req *RegisterNotify_Req) (*RegisterNotify_Resp, error) {
+	resp := &RegisterNotify_Resp{}
 	x.Server.RegisterNotify(req, resp)
 	return resp, nil
 }
@@ -88,14 +90,14 @@ type PluginXClient struct {
 func NewPluginXClient(c PluginClient) *PluginXClient {
 	return &PluginXClient{c: c}
 }
-func (x PluginXClient) GetPluginInfo() *GetPluginInfoResp {
-	r, err := x.c.GetPluginInfo(context.Background(), &GetPluginInfoReq{})
+func (x PluginXClient) GetPluginInfo() *GetPluginInfo_Resp {
+	r, err := x.c.GetPluginInfo(context.Background(), &GetPluginInfo_Req{})
 	if err != nil {
 		panic(err)
 	}
 	return r
 }
-func (x PluginXClient) GetPluginInfo0(req *GetPluginInfoReq) *GetPluginInfoResp {
+func (x PluginXClient) GetPluginInfo0(req *GetPluginInfo_Req) *GetPluginInfo_Resp {
 	r, err := x.c.GetPluginInfo(context.Background(), req)
 	if err != nil {
 		panic(err)
@@ -104,7 +106,7 @@ func (x PluginXClient) GetPluginInfo0(req *GetPluginInfoReq) *GetPluginInfoResp 
 }
 
 type PluginXServer interface {
-	GetPluginInfo(remote CardXClient, req *GetPluginInfoReq, resp *GetPluginInfoResp)
+	GetPluginInfo(remote CardXClient, req *GetPluginInfo_Req, resp *GetPluginInfo_Resp)
 }
 
 func NewPluginClientFromServer(x PluginServer) PluginClient {
@@ -113,7 +115,7 @@ func NewPluginClientFromServer(x PluginServer) PluginClient {
 
 type pluginClientByServer struct{ s PluginServer }
 
-func (x pluginClientByServer) GetPluginInfo(ctx context.Context, req *GetPluginInfoReq, opts ...grpc.CallOption) (*GetPluginInfoResp, error) {
+func (x pluginClientByServer) GetPluginInfo(ctx context.Context, req *GetPluginInfo_Req, opts ...grpc.CallOption) (*GetPluginInfo_Resp, error) {
 	return x.s.GetPluginInfo(ctx, req)
 }
 func NewPluginServerFromXServer(server PluginXServer) *PluginXServerAdapter {
@@ -125,8 +127,8 @@ type PluginXServerAdapter struct {
 	Client CardXClient
 }
 
-func (x PluginXServerAdapter) GetPluginInfo(ctx context.Context, req *GetPluginInfoReq) (*GetPluginInfoResp, error) {
-	resp := &GetPluginInfoResp{}
+func (x PluginXServerAdapter) GetPluginInfo(ctx context.Context, req *GetPluginInfo_Req) (*GetPluginInfo_Resp, error) {
+	resp := &GetPluginInfo_Resp{}
 	x.Server.GetPluginInfo(x.Client, req, resp)
 	return resp, nil
 }
