@@ -1,0 +1,13 @@
+syntax = "proto3";
+package proto;
+
+import "proto/plugin.proto";
+
+option go_package = "github.com/ohanan/card_proto/pkg/protoservice/proto";
+
+message GetPluginInfo {
+  message Req {}
+  message Resp {
+    PluginInfo info = 1;
+  }
+}

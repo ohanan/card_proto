@@ -1,0 +1,28 @@
+syntax = "proto3";
+package proto;
+
+import "proto/player.proto";
+
+option go_package = "github.com/ohanan/card_proto/pkg/protoservice/proto";
+
+message Hello {
+  message Req {
+    string abcd = 1;
+  }
+  message Resp {}
+}
+
+message GetPlayerInfo {
+  message Req {
+    string user_id = 1;
+  }
+  message Resp {
+    PlayerInfo info = 1;
+  }
+}
+message RegisterNotify {
+  message Req {
+    repeated string event = 1;
+  }
+  message Resp {}
+}

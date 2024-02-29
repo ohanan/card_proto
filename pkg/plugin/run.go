@@ -4,12 +4,12 @@ import (
 	"context"
 
 	"github.com/hashicorp/go-plugin"
-	"github.com/ohanan/card_proto/pkg/proto"
+	"github.com/ohanan/card_proto/pkg/protoservice"
 	"google.golang.org/grpc"
 )
 
-func ServePlugin(name string, server proto.PluginXServer) {
-	xServer := proto.NewPluginServerFromXServer(server)
+func ServePlugin(name string, server protoservice.PluginXServer) {
+	xServer := protoservice.NewPluginServerFromXServer(server)
 	p := &xPlugin{
 		xServer: xServer,
 	}
@@ -22,17 +22,17 @@ func ServePlugin(name string, server proto.PluginXServer) {
 
 type xPlugin struct {
 	plugin.Plugin
-	xServer *proto.PluginXServerAdapter
+	xServer *protoservice.PluginXServerAdapter
 }
 
 func (p *xPlugin) GRPCServer(broker *plugin.GRPCBroker, server *grpc.Server) error {
-	proto.RegisterPluginServer(server, p.xServer)
+	protoservice.RegisterPluginServer(server, p.xServer)
 	return nil
 }
 
 func (p *xPlugin) GRPCClient(ctx context.Context, broker *plugin.GRPCBroker, conn *grpc.ClientConn) (interface{}, error) {
-	client := proto.NewCardClient(conn)
-	p.xServer.Client = *proto.NewCardXClient(client)
+	client := protoservice.NewCardClient(conn)
+	p.xServer.Client = *protoservice.NewCardXClient(client)
 	return client, nil
 }
 func CreateHandshakeConfig() plugin.HandshakeConfig {

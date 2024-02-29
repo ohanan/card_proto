@@ -1,0 +1,15 @@
+syntax = "proto3";
+package proto;
+
+import "proto/action.proto";
+
+option go_package = "github.com/ohanan/card_proto/pkg/protoservice/proto";
+
+message StartMode {
+  message Req {
+    string name = 1;
+  }
+  message Resp {
+    repeated Action actions = 1;
+  }
+}
