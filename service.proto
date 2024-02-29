@@ -1,17 +1,18 @@
 syntax = "proto3";
 package proto;
 
-import "proto/card_methods.proto";
+import "proto/host_methods.proto";
 import "proto/plugin_methods.proto";
 
 option go_package = "./protoservice";
 
-service Card {
-  rpc Hello(Hello.Req) returns (Hello.Resp);
+service Host {
   rpc GetPlayerInfo(GetPlayerInfo.Req) returns (GetPlayerInfo.Resp);
   rpc RegisterNotify(RegisterNotify.Req) returns (RegisterNotify.Resp);
+  rpc AskAction(AskAction.Req) returns (AskAction.Resp);
 }
 
 service Plugin {
   rpc GetPluginInfo(GetPluginInfo.Req) returns (GetPluginInfo.Resp);
+  rpc StartMode(StartMode.Req) returns (StartMode.Resp);
 }

@@ -93,7 +93,7 @@ func generateFile(gen *protogen.Plugin, file *protogen.File) {
 			var signatures []any
 			signatures = append(signatures, method.GoName, "(")
 			if isPlugin {
-				signatures = append(signatures, "remote CardXClient, ")
+				signatures = append(signatures, "helper *Helper, ")
 			}
 			signatures = append(signatures, "req *", method.Input.GoIdent, ", resp *", method.Output.GoIdent, ")")
 			g.P(signatures...)
@@ -110,22 +110,22 @@ func generateFile(gen *protogen.Plugin, file *protogen.File) {
 			g.P("}")
 		}
 
-		xServerName := serviceName + "XServerAdapter"
-		g.P("func New", serviceName, "ServerFromXServer(server ", serviceName, "XServer) *", xServerName, "{")
+		xServerName := privateName(serviceName) + "XServerAdapter"
+		g.P("func New", serviceName, "ServerFromXServer(server ", serviceName, "XServer)", serviceName, "Server {")
 		g.P("return &", xServerName, "{Server: server}")
 		g.P("}")
 		g.P("type  ", xServerName, " struct{ ")
 		g.P("Server ", serviceName, "XServer")
 		if isPlugin {
-			g.P("Client CardXClient")
+			g.P("*Helper")
 		}
 		g.P("}")
 		for _, method := range service.Methods {
-			g.P("func(x ", xServerName, ") ", method.GoName, "(ctx ", contextIdent, ", req *", method.Input.GoIdent, ")(*", method.Output.GoIdent, ", error){")
+			g.P("func(x *", xServerName, ") ", method.GoName, "(ctx ", contextIdent, ", req *", method.Input.GoIdent, ")(*", method.Output.GoIdent, ", error){")
 			g.P("resp := &", method.Output.GoIdent, "{}")
 			caller := "(req, resp)"
 			if isPlugin {
-				caller = "(x.Client, req, resp)"
+				caller = "(x.Helper, req, resp)"
 			}
 			g.P("x.Server.", method.GoName, caller)
 			g.P("return resp, nil")

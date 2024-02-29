@@ -1,8 +1,43 @@
 syntax = "proto3";
 package proto;
 
-option go_package = "github.com/ohanan/card_proto/pkg/protoservice/proto";
+import "proto/card.proto";
 
+option go_package = "github.com/ohanan/card_proto/pkg/protoservice/proto";
+enum ActionType {
+  MAIN = 0;
+}
+enum UserAction {
+  PRIMARY = 0;
+  SECONDARY = 1;
+  FOCUS = 2;
+}
 message Action {
-  uint32 id = 1;
+  oneof option {
+    SelectCardAction action = 3;
+  }
+}
+message SelectCardAction {
+  repeated SelectCardOption options = 1;
+}
+message SelectCardOption {
+  ActionOption option = 1;
+  Card card = 2;
+}
+
+message ActionOption {
+  uint64 id = 1;
+  string name = 2;
+  string description = 4;
+  bool selected = 5;
+  bool disabled = 6;
+}
+
+message ActionResult {
+  uint64 id = 1;
+  UserAction action = 2;
+}
+
+message Notification {
+  string notification = 1;
 }

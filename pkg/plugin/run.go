@@ -22,7 +22,7 @@ func ServePlugin(name string, server protoservice.PluginXServer) {
 
 type xPlugin struct {
 	plugin.Plugin
-	xServer *protoservice.PluginXServerAdapter
+	xServer protoservice.PluginServer
 }
 
 func (p *xPlugin) GRPCServer(broker *plugin.GRPCBroker, server *grpc.Server) error {
@@ -31,8 +31,12 @@ func (p *xPlugin) GRPCServer(broker *plugin.GRPCBroker, server *grpc.Server) err
 }
 
 func (p *xPlugin) GRPCClient(ctx context.Context, broker *plugin.GRPCBroker, conn *grpc.ClientConn) (interface{}, error) {
-	client := protoservice.NewCardClient(conn)
-	p.xServer.Client = *protoservice.NewCardXClient(client)
+	client := protoservice.NewHostClient(conn)
+	if v, ok := p.xServer.(interface {
+		InitHelper(c *protoservice.HostXClient)
+	}); ok {
+		v.InitHelper(protoservice.NewHostXClient(client))
+	}
 	return client, nil
 }
 func CreateHandshakeConfig() plugin.HandshakeConfig {

@@ -2,3 +2,5 @@ syntax = "proto3";
 package proto;
 
 option go_package = "github.com/ohanan/card_proto/pkg/protoservice/proto";
+
+message Card {}

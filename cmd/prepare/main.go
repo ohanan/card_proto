@@ -51,21 +51,21 @@ func main() {
 	if err := template.Must(template.New("rpc_proto").Parse(`syntax = "proto3";
 package proto;
 
-import "proto/card_methods.proto";
+import "proto/host_methods.proto";
 import "proto/plugin_methods.proto";
 
 option go_package = "./protoservice";
 
-service Card {
-{{range .Cards}}  rpc {{.}}({{.}}.Req) returns ({{.}}.Resp);
+service Host {
+{{range .HostMethods}}  rpc {{.}}({{.}}.Req) returns ({{.}}.Resp);
 {{end}}}
 
 service Plugin {
-{{range .Plugins}}  rpc {{.}}({{.}}.Req) returns ({{.}}.Resp);
+{{range .PluginMethods}}  rpc {{.}}({{.}}.Req) returns ({{.}}.Resp);
 {{end}}}
 `)).Execute(&bb, map[string]interface{}{
-		"Cards":   getMethods("proto/card_methods.proto"),
-		"Plugins": getMethods("proto/plugin_methods.proto"),
+		"HostMethods":   getMethods("proto/host_methods.proto"),
+		"PluginMethods": getMethods("proto/plugin_methods.proto"),
 	}); err != nil {
 		panic(err)
 	}

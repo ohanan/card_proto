@@ -1,16 +1,10 @@
 syntax = "proto3";
 package proto;
 
+import "proto/action.proto";
 import "proto/player.proto";
 
 option go_package = "github.com/ohanan/card_proto/pkg/protoservice/proto";
-
-message Hello {
-  message Req {
-    string abcd = 1;
-  }
-  message Resp {}
-}
 
 message GetPlayerInfo {
   message Req {
@@ -25,4 +19,13 @@ message RegisterNotify {
     repeated string event = 1;
   }
   message Resp {}
+}
+
+message AskAction {
+  message Req {
+    repeated Action actions = 1;
+  }
+  message Resp {
+    ActionResult result = 1;
+  }
 }

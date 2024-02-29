@@ -11,3 +11,9 @@ message GetPluginInfo {
     PluginInfo info = 1;
   }
 }
+message StartMode {
+  message Req {
+    string name = 1;
+  }
+  message Resp {}
+}

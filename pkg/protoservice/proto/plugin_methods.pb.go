@@ -58,6 +58,44 @@ func (*GetPluginInfo) Descriptor() ([]byte, []int) {
 	return file_proto_plugin_methods_proto_rawDescGZIP(), []int{0}
 }
 
+type StartMode struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *StartMode) Reset() {
+	*x = StartMode{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_proto_plugin_methods_proto_msgTypes[1]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *StartMode) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*StartMode) ProtoMessage() {}
+
+func (x *StartMode) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_plugin_methods_proto_msgTypes[1]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use StartMode.ProtoReflect.Descriptor instead.
+func (*StartMode) Descriptor() ([]byte, []int) {
+	return file_proto_plugin_methods_proto_rawDescGZIP(), []int{1}
+}
+
 type GetPluginInfo_Req struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -67,7 +105,7 @@ type GetPluginInfo_Req struct {
 func (x *GetPluginInfo_Req) Reset() {
 	*x = GetPluginInfo_Req{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_proto_plugin_methods_proto_msgTypes[1]
+		mi := &file_proto_plugin_methods_proto_msgTypes[2]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -80,7 +118,7 @@ func (x *GetPluginInfo_Req) String() string {
 func (*GetPluginInfo_Req) ProtoMessage() {}
 
 func (x *GetPluginInfo_Req) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_plugin_methods_proto_msgTypes[1]
+	mi := &file_proto_plugin_methods_proto_msgTypes[2]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -107,7 +145,7 @@ type GetPluginInfo_Resp struct {
 func (x *GetPluginInfo_Resp) Reset() {
 	*x = GetPluginInfo_Resp{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_proto_plugin_methods_proto_msgTypes[2]
+		mi := &file_proto_plugin_methods_proto_msgTypes[3]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -120,7 +158,7 @@ func (x *GetPluginInfo_Resp) String() string {
 func (*GetPluginInfo_Resp) ProtoMessage() {}
 
 func (x *GetPluginInfo_Resp) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_plugin_methods_proto_msgTypes[2]
+	mi := &file_proto_plugin_methods_proto_msgTypes[3]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -143,6 +181,91 @@ func (x *GetPluginInfo_Resp) GetInfo() *PluginInfo {
 	return nil
 }
 
+type StartMode_Req struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Name string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+}
+
+func (x *StartMode_Req) Reset() {
+	*x = StartMode_Req{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_proto_plugin_methods_proto_msgTypes[4]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *StartMode_Req) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*StartMode_Req) ProtoMessage() {}
+
+func (x *StartMode_Req) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_plugin_methods_proto_msgTypes[4]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use StartMode_Req.ProtoReflect.Descriptor instead.
+func (*StartMode_Req) Descriptor() ([]byte, []int) {
+	return file_proto_plugin_methods_proto_rawDescGZIP(), []int{1, 0}
+}
+
+func (x *StartMode_Req) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+type StartMode_Resp struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *StartMode_Resp) Reset() {
+	*x = StartMode_Resp{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_proto_plugin_methods_proto_msgTypes[5]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *StartMode_Resp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*StartMode_Resp) ProtoMessage() {}
+
+func (x *StartMode_Resp) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_plugin_methods_proto_msgTypes[5]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use StartMode_Resp.ProtoReflect.Descriptor instead.
+func (*StartMode_Resp) Descriptor() ([]byte, []int) {
+	return file_proto_plugin_methods_proto_rawDescGZIP(), []int{1, 1}
+}
+
 var File_proto_plugin_methods_proto protoreflect.FileDescriptor
 
 var file_proto_plugin_methods_proto_rawDesc = []byte{
@@ -153,7 +276,10 @@ var file_proto_plugin_methods_proto_rawDesc = []byte{
 	0x75, 0x67, 0x69, 0x6e, 0x49, 0x6e, 0x66, 0x6f, 0x1a, 0x05, 0x0a, 0x03, 0x52, 0x65, 0x71, 0x1a,
 	0x2d, 0x0a, 0x04, 0x52, 0x65, 0x73, 0x70, 0x12, 0x25, 0x0a, 0x04, 0x69, 0x6e, 0x66, 0x6f, 0x18,
 	0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x11, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x2e, 0x50, 0x6c,
-	0x75, 0x67, 0x69, 0x6e, 0x49, 0x6e, 0x66, 0x6f, 0x52, 0x04, 0x69, 0x6e, 0x66, 0x6f, 0x42, 0x35,
+	0x75, 0x67, 0x69, 0x6e, 0x49, 0x6e, 0x66, 0x6f, 0x52, 0x04, 0x69, 0x6e, 0x66, 0x6f, 0x22, 0x2e,
+	0x0a, 0x09, 0x53, 0x74, 0x61, 0x72, 0x74, 0x4d, 0x6f, 0x64, 0x65, 0x1a, 0x19, 0x0a, 0x03, 0x52,
+	0x65, 0x71, 0x12, 0x12, 0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x1a, 0x06, 0x0a, 0x04, 0x52, 0x65, 0x73, 0x70, 0x42, 0x35,
 	0x5a, 0x33, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x6f, 0x68, 0x61,
 	0x6e, 0x61, 0x6e, 0x2f, 0x63, 0x61, 0x72, 0x64, 0x5f, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x2f, 0x70,
 	0x6b, 0x67, 0x2f, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x2f,
@@ -172,15 +298,18 @@ func file_proto_plugin_methods_proto_rawDescGZIP() []byte {
 	return file_proto_plugin_methods_proto_rawDescData
 }
 
-var file_proto_plugin_methods_proto_msgTypes = make([]protoimpl.MessageInfo, 3)
+var file_proto_plugin_methods_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
 var file_proto_plugin_methods_proto_goTypes = []interface{}{
 	(*GetPluginInfo)(nil),      // 0: proto.GetPluginInfo
-	(*GetPluginInfo_Req)(nil),  // 1: proto.GetPluginInfo.Req
-	(*GetPluginInfo_Resp)(nil), // 2: proto.GetPluginInfo.Resp
-	(*PluginInfo)(nil),         // 3: proto.PluginInfo
+	(*StartMode)(nil),          // 1: proto.StartMode
+	(*GetPluginInfo_Req)(nil),  // 2: proto.GetPluginInfo.Req
+	(*GetPluginInfo_Resp)(nil), // 3: proto.GetPluginInfo.Resp
+	(*StartMode_Req)(nil),      // 4: proto.StartMode.Req
+	(*StartMode_Resp)(nil),     // 5: proto.StartMode.Resp
+	(*PluginInfo)(nil),         // 6: proto.PluginInfo
 }
 var file_proto_plugin_methods_proto_depIdxs = []int32{
-	3, // 0: proto.GetPluginInfo.Resp.info:type_name -> proto.PluginInfo
+	6, // 0: proto.GetPluginInfo.Resp.info:type_name -> proto.PluginInfo
 	1, // [1:1] is the sub-list for method output_type
 	1, // [1:1] is the sub-list for method input_type
 	1, // [1:1] is the sub-list for extension type_name
@@ -208,7 +337,7 @@ func file_proto_plugin_methods_proto_init() {
 			}
 		}
 		file_proto_plugin_methods_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetPluginInfo_Req); i {
+			switch v := v.(*StartMode); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -220,7 +349,43 @@ func file_proto_plugin_methods_proto_init() {
 			}
 		}
 		file_proto_plugin_methods_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*GetPluginInfo_Req); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_proto_plugin_methods_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*GetPluginInfo_Resp); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_proto_plugin_methods_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*StartMode_Req); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_proto_plugin_methods_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*StartMode_Resp); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -238,7 +403,7 @@ func file_proto_plugin_methods_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_proto_plugin_methods_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   3,
+			NumMessages:   6,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

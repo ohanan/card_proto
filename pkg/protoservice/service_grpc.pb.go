@@ -20,161 +20,161 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	Card_Hello_FullMethodName          = "/proto.Card/Hello"
-	Card_GetPlayerInfo_FullMethodName  = "/proto.Card/GetPlayerInfo"
-	Card_RegisterNotify_FullMethodName = "/proto.Card/RegisterNotify"
+	Host_GetPlayerInfo_FullMethodName  = "/proto.Host/GetPlayerInfo"
+	Host_RegisterNotify_FullMethodName = "/proto.Host/RegisterNotify"
+	Host_AskAction_FullMethodName      = "/proto.Host/AskAction"
 )
 
-// CardClient is the client API for Card service.
+// HostClient is the client API for Host service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type CardClient interface {
-	Hello(ctx context.Context, in *proto.Hello_Req, opts ...grpc.CallOption) (*proto.Hello_Resp, error)
+type HostClient interface {
 	GetPlayerInfo(ctx context.Context, in *proto.GetPlayerInfo_Req, opts ...grpc.CallOption) (*proto.GetPlayerInfo_Resp, error)
 	RegisterNotify(ctx context.Context, in *proto.RegisterNotify_Req, opts ...grpc.CallOption) (*proto.RegisterNotify_Resp, error)
+	AskAction(ctx context.Context, in *proto.AskAction_Req, opts ...grpc.CallOption) (*proto.AskAction_Resp, error)
 }
 
-type cardClient struct {
+type hostClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewCardClient(cc grpc.ClientConnInterface) CardClient {
-	return &cardClient{cc}
+func NewHostClient(cc grpc.ClientConnInterface) HostClient {
+	return &hostClient{cc}
 }
 
-func (c *cardClient) Hello(ctx context.Context, in *proto.Hello_Req, opts ...grpc.CallOption) (*proto.Hello_Resp, error) {
-	out := new(proto.Hello_Resp)
-	err := c.cc.Invoke(ctx, Card_Hello_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *cardClient) GetPlayerInfo(ctx context.Context, in *proto.GetPlayerInfo_Req, opts ...grpc.CallOption) (*proto.GetPlayerInfo_Resp, error) {
+func (c *hostClient) GetPlayerInfo(ctx context.Context, in *proto.GetPlayerInfo_Req, opts ...grpc.CallOption) (*proto.GetPlayerInfo_Resp, error) {
 	out := new(proto.GetPlayerInfo_Resp)
-	err := c.cc.Invoke(ctx, Card_GetPlayerInfo_FullMethodName, in, out, opts...)
+	err := c.cc.Invoke(ctx, Host_GetPlayerInfo_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *cardClient) RegisterNotify(ctx context.Context, in *proto.RegisterNotify_Req, opts ...grpc.CallOption) (*proto.RegisterNotify_Resp, error) {
+func (c *hostClient) RegisterNotify(ctx context.Context, in *proto.RegisterNotify_Req, opts ...grpc.CallOption) (*proto.RegisterNotify_Resp, error) {
 	out := new(proto.RegisterNotify_Resp)
-	err := c.cc.Invoke(ctx, Card_RegisterNotify_FullMethodName, in, out, opts...)
+	err := c.cc.Invoke(ctx, Host_RegisterNotify_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// CardServer is the server API for Card service.
-// All implementations should embed UnimplementedCardServer
+func (c *hostClient) AskAction(ctx context.Context, in *proto.AskAction_Req, opts ...grpc.CallOption) (*proto.AskAction_Resp, error) {
+	out := new(proto.AskAction_Resp)
+	err := c.cc.Invoke(ctx, Host_AskAction_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// HostServer is the server API for Host service.
+// All implementations should embed UnimplementedHostServer
 // for forward compatibility
-type CardServer interface {
-	Hello(context.Context, *proto.Hello_Req) (*proto.Hello_Resp, error)
+type HostServer interface {
 	GetPlayerInfo(context.Context, *proto.GetPlayerInfo_Req) (*proto.GetPlayerInfo_Resp, error)
 	RegisterNotify(context.Context, *proto.RegisterNotify_Req) (*proto.RegisterNotify_Resp, error)
+	AskAction(context.Context, *proto.AskAction_Req) (*proto.AskAction_Resp, error)
 }
 
-// UnimplementedCardServer should be embedded to have forward compatible implementations.
-type UnimplementedCardServer struct {
+// UnimplementedHostServer should be embedded to have forward compatible implementations.
+type UnimplementedHostServer struct {
 }
 
-func (UnimplementedCardServer) Hello(context.Context, *proto.Hello_Req) (*proto.Hello_Resp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Hello not implemented")
-}
-func (UnimplementedCardServer) GetPlayerInfo(context.Context, *proto.GetPlayerInfo_Req) (*proto.GetPlayerInfo_Resp, error) {
+func (UnimplementedHostServer) GetPlayerInfo(context.Context, *proto.GetPlayerInfo_Req) (*proto.GetPlayerInfo_Resp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetPlayerInfo not implemented")
 }
-func (UnimplementedCardServer) RegisterNotify(context.Context, *proto.RegisterNotify_Req) (*proto.RegisterNotify_Resp, error) {
+func (UnimplementedHostServer) RegisterNotify(context.Context, *proto.RegisterNotify_Req) (*proto.RegisterNotify_Resp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RegisterNotify not implemented")
 }
+func (UnimplementedHostServer) AskAction(context.Context, *proto.AskAction_Req) (*proto.AskAction_Resp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AskAction not implemented")
+}
 
-// UnsafeCardServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to CardServer will
+// UnsafeHostServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to HostServer will
 // result in compilation errors.
-type UnsafeCardServer interface {
-	mustEmbedUnimplementedCardServer()
+type UnsafeHostServer interface {
+	mustEmbedUnimplementedHostServer()
 }
 
-func RegisterCardServer(s grpc.ServiceRegistrar, srv CardServer) {
-	s.RegisterService(&Card_ServiceDesc, srv)
+func RegisterHostServer(s grpc.ServiceRegistrar, srv HostServer) {
+	s.RegisterService(&Host_ServiceDesc, srv)
 }
 
-func _Card_Hello_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(proto.Hello_Req)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(CardServer).Hello(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Card_Hello_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CardServer).Hello(ctx, req.(*proto.Hello_Req))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Card_GetPlayerInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Host_GetPlayerInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(proto.GetPlayerInfo_Req)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(CardServer).GetPlayerInfo(ctx, in)
+		return srv.(HostServer).GetPlayerInfo(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Card_GetPlayerInfo_FullMethodName,
+		FullMethod: Host_GetPlayerInfo_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CardServer).GetPlayerInfo(ctx, req.(*proto.GetPlayerInfo_Req))
+		return srv.(HostServer).GetPlayerInfo(ctx, req.(*proto.GetPlayerInfo_Req))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Card_RegisterNotify_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Host_RegisterNotify_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(proto.RegisterNotify_Req)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(CardServer).RegisterNotify(ctx, in)
+		return srv.(HostServer).RegisterNotify(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Card_RegisterNotify_FullMethodName,
+		FullMethod: Host_RegisterNotify_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CardServer).RegisterNotify(ctx, req.(*proto.RegisterNotify_Req))
+		return srv.(HostServer).RegisterNotify(ctx, req.(*proto.RegisterNotify_Req))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// Card_ServiceDesc is the grpc.ServiceDesc for Card service.
+func _Host_AskAction_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(proto.AskAction_Req)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(HostServer).AskAction(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Host_AskAction_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(HostServer).AskAction(ctx, req.(*proto.AskAction_Req))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+// Host_ServiceDesc is the grpc.ServiceDesc for Host service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var Card_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "proto.Card",
-	HandlerType: (*CardServer)(nil),
+var Host_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "proto.Host",
+	HandlerType: (*HostServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "Hello",
-			Handler:    _Card_Hello_Handler,
-		},
-		{
 			MethodName: "GetPlayerInfo",
-			Handler:    _Card_GetPlayerInfo_Handler,
+			Handler:    _Host_GetPlayerInfo_Handler,
 		},
 		{
 			MethodName: "RegisterNotify",
-			Handler:    _Card_RegisterNotify_Handler,
+			Handler:    _Host_RegisterNotify_Handler,
+		},
+		{
+			MethodName: "AskAction",
+			Handler:    _Host_AskAction_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
@@ -183,6 +183,7 @@ var Card_ServiceDesc = grpc.ServiceDesc{
 
 const (
 	Plugin_GetPluginInfo_FullMethodName = "/proto.Plugin/GetPluginInfo"
+	Plugin_StartMode_FullMethodName     = "/proto.Plugin/StartMode"
 )
 
 // PluginClient is the client API for Plugin service.
@@ -190,6 +191,7 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type PluginClient interface {
 	GetPluginInfo(ctx context.Context, in *proto.GetPluginInfo_Req, opts ...grpc.CallOption) (*proto.GetPluginInfo_Resp, error)
+	StartMode(ctx context.Context, in *proto.StartMode_Req, opts ...grpc.CallOption) (*proto.StartMode_Resp, error)
 }
 
 type pluginClient struct {
@@ -209,11 +211,21 @@ func (c *pluginClient) GetPluginInfo(ctx context.Context, in *proto.GetPluginInf
 	return out, nil
 }
 
+func (c *pluginClient) StartMode(ctx context.Context, in *proto.StartMode_Req, opts ...grpc.CallOption) (*proto.StartMode_Resp, error) {
+	out := new(proto.StartMode_Resp)
+	err := c.cc.Invoke(ctx, Plugin_StartMode_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // PluginServer is the server API for Plugin service.
 // All implementations should embed UnimplementedPluginServer
 // for forward compatibility
 type PluginServer interface {
 	GetPluginInfo(context.Context, *proto.GetPluginInfo_Req) (*proto.GetPluginInfo_Resp, error)
+	StartMode(context.Context, *proto.StartMode_Req) (*proto.StartMode_Resp, error)
 }
 
 // UnimplementedPluginServer should be embedded to have forward compatible implementations.
@@ -222,6 +234,9 @@ type UnimplementedPluginServer struct {
 
 func (UnimplementedPluginServer) GetPluginInfo(context.Context, *proto.GetPluginInfo_Req) (*proto.GetPluginInfo_Resp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetPluginInfo not implemented")
+}
+func (UnimplementedPluginServer) StartMode(context.Context, *proto.StartMode_Req) (*proto.StartMode_Resp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StartMode not implemented")
 }
 
 // UnsafePluginServer may be embedded to opt out of forward compatibility for this service.
@@ -253,6 +268,24 @@ func _Plugin_GetPluginInfo_Handler(srv interface{}, ctx context.Context, dec fun
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Plugin_StartMode_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(proto.StartMode_Req)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PluginServer).StartMode(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Plugin_StartMode_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PluginServer).StartMode(ctx, req.(*proto.StartMode_Req))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Plugin_ServiceDesc is the grpc.ServiceDesc for Plugin service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -263,6 +296,10 @@ var Plugin_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetPluginInfo",
 			Handler:    _Plugin_GetPluginInfo_Handler,
+		},
+		{
+			MethodName: "StartMode",
+			Handler:    _Plugin_StartMode_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

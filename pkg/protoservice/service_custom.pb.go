@@ -8,30 +8,14 @@ import (
 	grpc "google.golang.org/grpc"
 )
 
-type CardXClient struct {
-	c CardClient
+type HostXClient struct {
+	c HostClient
 }
 
-func NewCardXClient(c CardClient) *CardXClient {
-	return &CardXClient{c: c}
+func NewHostXClient(c HostClient) *HostXClient {
+	return &HostXClient{c: c}
 }
-func (x CardXClient) Hello(abcd string) *proto.Hello_Resp {
-	r, err := x.c.Hello(context.Background(), &proto.Hello_Req{
-		Abcd: abcd,
-	})
-	if err != nil {
-		panic(err)
-	}
-	return r
-}
-func (x CardXClient) Hello0(req *proto.Hello_Req) *proto.Hello_Resp {
-	r, err := x.c.Hello(context.Background(), req)
-	if err != nil {
-		panic(err)
-	}
-	return r
-}
-func (x CardXClient) GetPlayerInfo(userId string) *proto.GetPlayerInfo_Resp {
+func (x HostXClient) GetPlayerInfo(userId string) *proto.GetPlayerInfo_Resp {
 	r, err := x.c.GetPlayerInfo(context.Background(), &proto.GetPlayerInfo_Req{
 		UserId: userId,
 	})
@@ -40,14 +24,14 @@ func (x CardXClient) GetPlayerInfo(userId string) *proto.GetPlayerInfo_Resp {
 	}
 	return r
 }
-func (x CardXClient) GetPlayerInfo0(req *proto.GetPlayerInfo_Req) *proto.GetPlayerInfo_Resp {
+func (x HostXClient) GetPlayerInfo0(req *proto.GetPlayerInfo_Req) *proto.GetPlayerInfo_Resp {
 	r, err := x.c.GetPlayerInfo(context.Background(), req)
 	if err != nil {
 		panic(err)
 	}
 	return r
 }
-func (x CardXClient) RegisterNotify(event []string) *proto.RegisterNotify_Resp {
+func (x HostXClient) RegisterNotify(event []string) *proto.RegisterNotify_Resp {
 	r, err := x.c.RegisterNotify(context.Background(), &proto.RegisterNotify_Req{
 		Event: event,
 	})
@@ -56,56 +40,72 @@ func (x CardXClient) RegisterNotify(event []string) *proto.RegisterNotify_Resp {
 	}
 	return r
 }
-func (x CardXClient) RegisterNotify0(req *proto.RegisterNotify_Req) *proto.RegisterNotify_Resp {
+func (x HostXClient) RegisterNotify0(req *proto.RegisterNotify_Req) *proto.RegisterNotify_Resp {
 	r, err := x.c.RegisterNotify(context.Background(), req)
 	if err != nil {
 		panic(err)
 	}
 	return r
 }
+func (x HostXClient) AskAction(actions []*proto.Action) *proto.AskAction_Resp {
+	r, err := x.c.AskAction(context.Background(), &proto.AskAction_Req{
+		Actions: actions,
+	})
+	if err != nil {
+		panic(err)
+	}
+	return r
+}
+func (x HostXClient) AskAction0(req *proto.AskAction_Req) *proto.AskAction_Resp {
+	r, err := x.c.AskAction(context.Background(), req)
+	if err != nil {
+		panic(err)
+	}
+	return r
+}
 
-type CardXServer interface {
-	Hello(req *proto.Hello_Req, resp *proto.Hello_Resp)
+type HostXServer interface {
 	GetPlayerInfo(req *proto.GetPlayerInfo_Req, resp *proto.GetPlayerInfo_Resp)
 	RegisterNotify(req *proto.RegisterNotify_Req, resp *proto.RegisterNotify_Resp)
+	AskAction(req *proto.AskAction_Req, resp *proto.AskAction_Resp)
 }
 
-func NewCardClientFromServer(x CardServer) CardClient {
-	return &cardClientByServer{s: x}
+func NewHostClientFromServer(x HostServer) HostClient {
+	return &hostClientByServer{s: x}
 }
 
-type cardClientByServer struct{ s CardServer }
+type hostClientByServer struct{ s HostServer }
 
-func (x cardClientByServer) Hello(ctx context.Context, req *proto.Hello_Req, opts ...grpc.CallOption) (*proto.Hello_Resp, error) {
-	return x.s.Hello(ctx, req)
-}
-func (x cardClientByServer) GetPlayerInfo(ctx context.Context, req *proto.GetPlayerInfo_Req, opts ...grpc.CallOption) (*proto.GetPlayerInfo_Resp, error) {
+func (x hostClientByServer) GetPlayerInfo(ctx context.Context, req *proto.GetPlayerInfo_Req, opts ...grpc.CallOption) (*proto.GetPlayerInfo_Resp, error) {
 	return x.s.GetPlayerInfo(ctx, req)
 }
-func (x cardClientByServer) RegisterNotify(ctx context.Context, req *proto.RegisterNotify_Req, opts ...grpc.CallOption) (*proto.RegisterNotify_Resp, error) {
+func (x hostClientByServer) RegisterNotify(ctx context.Context, req *proto.RegisterNotify_Req, opts ...grpc.CallOption) (*proto.RegisterNotify_Resp, error) {
 	return x.s.RegisterNotify(ctx, req)
 }
-func NewCardServerFromXServer(server CardXServer) *CardXServerAdapter {
-	return &CardXServerAdapter{Server: server}
+func (x hostClientByServer) AskAction(ctx context.Context, req *proto.AskAction_Req, opts ...grpc.CallOption) (*proto.AskAction_Resp, error) {
+	return x.s.AskAction(ctx, req)
+}
+func NewHostServerFromXServer(server HostXServer) HostServer {
+	return &hostXServerAdapter{Server: server}
 }
 
-type CardXServerAdapter struct {
-	Server CardXServer
+type hostXServerAdapter struct {
+	Server HostXServer
 }
 
-func (x CardXServerAdapter) Hello(ctx context.Context, req *proto.Hello_Req) (*proto.Hello_Resp, error) {
-	resp := &proto.Hello_Resp{}
-	x.Server.Hello(req, resp)
-	return resp, nil
-}
-func (x CardXServerAdapter) GetPlayerInfo(ctx context.Context, req *proto.GetPlayerInfo_Req) (*proto.GetPlayerInfo_Resp, error) {
+func (x *hostXServerAdapter) GetPlayerInfo(ctx context.Context, req *proto.GetPlayerInfo_Req) (*proto.GetPlayerInfo_Resp, error) {
 	resp := &proto.GetPlayerInfo_Resp{}
 	x.Server.GetPlayerInfo(req, resp)
 	return resp, nil
 }
-func (x CardXServerAdapter) RegisterNotify(ctx context.Context, req *proto.RegisterNotify_Req) (*proto.RegisterNotify_Resp, error) {
+func (x *hostXServerAdapter) RegisterNotify(ctx context.Context, req *proto.RegisterNotify_Req) (*proto.RegisterNotify_Resp, error) {
 	resp := &proto.RegisterNotify_Resp{}
 	x.Server.RegisterNotify(req, resp)
+	return resp, nil
+}
+func (x *hostXServerAdapter) AskAction(ctx context.Context, req *proto.AskAction_Req) (*proto.AskAction_Resp, error) {
+	resp := &proto.AskAction_Resp{}
+	x.Server.AskAction(req, resp)
 	return resp, nil
 }
 
@@ -130,9 +130,26 @@ func (x PluginXClient) GetPluginInfo0(req *proto.GetPluginInfo_Req) *proto.GetPl
 	}
 	return r
 }
+func (x PluginXClient) StartMode(name string) *proto.StartMode_Resp {
+	r, err := x.c.StartMode(context.Background(), &proto.StartMode_Req{
+		Name: name,
+	})
+	if err != nil {
+		panic(err)
+	}
+	return r
+}
+func (x PluginXClient) StartMode0(req *proto.StartMode_Req) *proto.StartMode_Resp {
+	r, err := x.c.StartMode(context.Background(), req)
+	if err != nil {
+		panic(err)
+	}
+	return r
+}
 
 type PluginXServer interface {
-	GetPluginInfo(remote CardXClient, req *proto.GetPluginInfo_Req, resp *proto.GetPluginInfo_Resp)
+	GetPluginInfo(helper *Helper, req *proto.GetPluginInfo_Req, resp *proto.GetPluginInfo_Resp)
+	StartMode(helper *Helper, req *proto.StartMode_Req, resp *proto.StartMode_Resp)
 }
 
 func NewPluginClientFromServer(x PluginServer) PluginClient {
@@ -144,17 +161,25 @@ type pluginClientByServer struct{ s PluginServer }
 func (x pluginClientByServer) GetPluginInfo(ctx context.Context, req *proto.GetPluginInfo_Req, opts ...grpc.CallOption) (*proto.GetPluginInfo_Resp, error) {
 	return x.s.GetPluginInfo(ctx, req)
 }
-func NewPluginServerFromXServer(server PluginXServer) *PluginXServerAdapter {
-	return &PluginXServerAdapter{Server: server}
+func (x pluginClientByServer) StartMode(ctx context.Context, req *proto.StartMode_Req, opts ...grpc.CallOption) (*proto.StartMode_Resp, error) {
+	return x.s.StartMode(ctx, req)
+}
+func NewPluginServerFromXServer(server PluginXServer) PluginServer {
+	return &pluginXServerAdapter{Server: server}
 }
 
-type PluginXServerAdapter struct {
+type pluginXServerAdapter struct {
 	Server PluginXServer
-	Client CardXClient
+	*Helper
 }
 
-func (x PluginXServerAdapter) GetPluginInfo(ctx context.Context, req *proto.GetPluginInfo_Req) (*proto.GetPluginInfo_Resp, error) {
+func (x *pluginXServerAdapter) GetPluginInfo(ctx context.Context, req *proto.GetPluginInfo_Req) (*proto.GetPluginInfo_Resp, error) {
 	resp := &proto.GetPluginInfo_Resp{}
-	x.Server.GetPluginInfo(x.Client, req, resp)
+	x.Server.GetPluginInfo(x.Helper, req, resp)
+	return resp, nil
+}
+func (x *pluginXServerAdapter) StartMode(ctx context.Context, req *proto.StartMode_Req) (*proto.StartMode_Resp, error) {
+	resp := &proto.StartMode_Resp{}
+	x.Server.StartMode(x.Helper, req, resp)
 	return resp, nil
 }
