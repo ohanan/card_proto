@@ -14,6 +14,7 @@ message GetPluginInfo {
 message StartMode {
   message Req {
     string name = 1;
+    uint64 seed = 2;
   }
   message Resp {}
 }

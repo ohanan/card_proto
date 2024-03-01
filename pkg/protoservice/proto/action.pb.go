@@ -63,52 +63,52 @@ func (ActionType) EnumDescriptor() ([]byte, []int) {
 	return file_proto_action_proto_rawDescGZIP(), []int{0}
 }
 
-type UserAction int32
+type UserActionType int32
 
 const (
-	UserAction_PRIMARY   UserAction = 0
-	UserAction_SECONDARY UserAction = 1
-	UserAction_FOCUS     UserAction = 2
+	UserActionType_PRIMARY   UserActionType = 0
+	UserActionType_SECONDARY UserActionType = 1
+	UserActionType_FOCUS     UserActionType = 2
 )
 
-// Enum value maps for UserAction.
+// Enum value maps for UserActionType.
 var (
-	UserAction_name = map[int32]string{
+	UserActionType_name = map[int32]string{
 		0: "PRIMARY",
 		1: "SECONDARY",
 		2: "FOCUS",
 	}
-	UserAction_value = map[string]int32{
+	UserActionType_value = map[string]int32{
 		"PRIMARY":   0,
 		"SECONDARY": 1,
 		"FOCUS":     2,
 	}
 )
 
-func (x UserAction) Enum() *UserAction {
-	p := new(UserAction)
+func (x UserActionType) Enum() *UserActionType {
+	p := new(UserActionType)
 	*p = x
 	return p
 }
 
-func (x UserAction) String() string {
+func (x UserActionType) String() string {
 	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
 }
 
-func (UserAction) Descriptor() protoreflect.EnumDescriptor {
+func (UserActionType) Descriptor() protoreflect.EnumDescriptor {
 	return file_proto_action_proto_enumTypes[1].Descriptor()
 }
 
-func (UserAction) Type() protoreflect.EnumType {
+func (UserActionType) Type() protoreflect.EnumType {
 	return &file_proto_action_proto_enumTypes[1]
 }
 
-func (x UserAction) Number() protoreflect.EnumNumber {
+func (x UserActionType) Number() protoreflect.EnumNumber {
 	return protoreflect.EnumNumber(x)
 }
 
-// Deprecated: Use UserAction.Descriptor instead.
-func (UserAction) EnumDescriptor() ([]byte, []int) {
+// Deprecated: Use UserActionType.Descriptor instead.
+func (UserActionType) EnumDescriptor() ([]byte, []int) {
 	return file_proto_action_proto_rawDescGZIP(), []int{1}
 }
 
@@ -119,7 +119,9 @@ type Action struct {
 
 	// Types that are assignable to Option:
 	//
-	//	*Action_Action
+	//	*Action_Card
+	//	*Action_Xx
+	//	*Action_Yy
 	Option isAction_Option `protobuf_oneof:"option"`
 }
 
@@ -162,217 +164,62 @@ func (m *Action) GetOption() isAction_Option {
 	return nil
 }
 
-func (x *Action) GetAction() *SelectCardAction {
-	if x, ok := x.GetOption().(*Action_Action); ok {
-		return x.Action
+func (x *Action) GetCard() *Action_SelectCard {
+	if x, ok := x.GetOption().(*Action_Card); ok {
+		return x.Card
 	}
 	return nil
+}
+
+func (x *Action) GetXx() int32 {
+	if x, ok := x.GetOption().(*Action_Xx); ok {
+		return x.Xx
+	}
+	return 0
+}
+
+func (x *Action) GetYy() int32 {
+	if x, ok := x.GetOption().(*Action_Yy); ok {
+		return x.Yy
+	}
+	return 0
 }
 
 type isAction_Option interface {
 	isAction_Option()
 }
 
-type Action_Action struct {
-	Action *SelectCardAction `protobuf:"bytes,3,opt,name=action,proto3,oneof"`
+type Action_Card struct {
+	Card *Action_SelectCard `protobuf:"bytes,1,opt,name=card,proto3,oneof"`
 }
 
-func (*Action_Action) isAction_Option() {}
-
-type SelectCardAction struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	Options []*SelectCardOption `protobuf:"bytes,1,rep,name=options,proto3" json:"options,omitempty"`
+type Action_Xx struct {
+	Xx int32 `protobuf:"varint,2,opt,name=xx,proto3,oneof"`
 }
 
-func (x *SelectCardAction) Reset() {
-	*x = SelectCardAction{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_proto_action_proto_msgTypes[1]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
+type Action_Yy struct {
+	Yy int32 `protobuf:"varint,3,opt,name=yy,proto3,oneof"`
 }
 
-func (x *SelectCardAction) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
+func (*Action_Card) isAction_Option() {}
 
-func (*SelectCardAction) ProtoMessage() {}
+func (*Action_Xx) isAction_Option() {}
 
-func (x *SelectCardAction) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_action_proto_msgTypes[1]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use SelectCardAction.ProtoReflect.Descriptor instead.
-func (*SelectCardAction) Descriptor() ([]byte, []int) {
-	return file_proto_action_proto_rawDescGZIP(), []int{1}
-}
-
-func (x *SelectCardAction) GetOptions() []*SelectCardOption {
-	if x != nil {
-		return x.Options
-	}
-	return nil
-}
-
-type SelectCardOption struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	Option *ActionOption `protobuf:"bytes,1,opt,name=option,proto3" json:"option,omitempty"`
-	Card   *Card         `protobuf:"bytes,2,opt,name=card,proto3" json:"card,omitempty"`
-}
-
-func (x *SelectCardOption) Reset() {
-	*x = SelectCardOption{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_proto_action_proto_msgTypes[2]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *SelectCardOption) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*SelectCardOption) ProtoMessage() {}
-
-func (x *SelectCardOption) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_action_proto_msgTypes[2]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use SelectCardOption.ProtoReflect.Descriptor instead.
-func (*SelectCardOption) Descriptor() ([]byte, []int) {
-	return file_proto_action_proto_rawDescGZIP(), []int{2}
-}
-
-func (x *SelectCardOption) GetOption() *ActionOption {
-	if x != nil {
-		return x.Option
-	}
-	return nil
-}
-
-func (x *SelectCardOption) GetCard() *Card {
-	if x != nil {
-		return x.Card
-	}
-	return nil
-}
-
-type ActionOption struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	Id          uint64 `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
-	Name        string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
-	Description string `protobuf:"bytes,4,opt,name=description,proto3" json:"description,omitempty"`
-	Selected    bool   `protobuf:"varint,5,opt,name=selected,proto3" json:"selected,omitempty"`
-	Disabled    bool   `protobuf:"varint,6,opt,name=disabled,proto3" json:"disabled,omitempty"`
-}
-
-func (x *ActionOption) Reset() {
-	*x = ActionOption{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_proto_action_proto_msgTypes[3]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *ActionOption) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*ActionOption) ProtoMessage() {}
-
-func (x *ActionOption) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_action_proto_msgTypes[3]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use ActionOption.ProtoReflect.Descriptor instead.
-func (*ActionOption) Descriptor() ([]byte, []int) {
-	return file_proto_action_proto_rawDescGZIP(), []int{3}
-}
-
-func (x *ActionOption) GetId() uint64 {
-	if x != nil {
-		return x.Id
-	}
-	return 0
-}
-
-func (x *ActionOption) GetName() string {
-	if x != nil {
-		return x.Name
-	}
-	return ""
-}
-
-func (x *ActionOption) GetDescription() string {
-	if x != nil {
-		return x.Description
-	}
-	return ""
-}
-
-func (x *ActionOption) GetSelected() bool {
-	if x != nil {
-		return x.Selected
-	}
-	return false
-}
-
-func (x *ActionOption) GetDisabled() bool {
-	if x != nil {
-		return x.Disabled
-	}
-	return false
-}
+func (*Action_Yy) isAction_Option() {}
 
 type ActionResult struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Id     uint64     `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
-	Action UserAction `protobuf:"varint,2,opt,name=action,proto3,enum=proto.UserAction" json:"action,omitempty"`
+	Id   int32          `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	Type UserActionType `protobuf:"varint,2,opt,name=type,proto3,enum=proto.UserActionType" json:"type,omitempty"`
 }
 
 func (x *ActionResult) Reset() {
 	*x = ActionResult{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_proto_action_proto_msgTypes[4]
+		mi := &file_proto_action_proto_msgTypes[1]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -385,7 +232,7 @@ func (x *ActionResult) String() string {
 func (*ActionResult) ProtoMessage() {}
 
 func (x *ActionResult) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_action_proto_msgTypes[4]
+	mi := &file_proto_action_proto_msgTypes[1]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -398,21 +245,21 @@ func (x *ActionResult) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ActionResult.ProtoReflect.Descriptor instead.
 func (*ActionResult) Descriptor() ([]byte, []int) {
-	return file_proto_action_proto_rawDescGZIP(), []int{4}
+	return file_proto_action_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *ActionResult) GetId() uint64 {
+func (x *ActionResult) GetId() int32 {
 	if x != nil {
 		return x.Id
 	}
 	return 0
 }
 
-func (x *ActionResult) GetAction() UserAction {
+func (x *ActionResult) GetType() UserActionType {
 	if x != nil {
-		return x.Action
+		return x.Type
 	}
-	return UserAction_PRIMARY
+	return UserActionType_PRIMARY
 }
 
 type Notification struct {
@@ -426,7 +273,7 @@ type Notification struct {
 func (x *Notification) Reset() {
 	*x = Notification{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_proto_action_proto_msgTypes[5]
+		mi := &file_proto_action_proto_msgTypes[2]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -439,7 +286,7 @@ func (x *Notification) String() string {
 func (*Notification) ProtoMessage() {}
 
 func (x *Notification) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_action_proto_msgTypes[5]
+	mi := &file_proto_action_proto_msgTypes[2]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -452,7 +299,7 @@ func (x *Notification) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Notification.ProtoReflect.Descriptor instead.
 func (*Notification) Descriptor() ([]byte, []int) {
-	return file_proto_action_proto_rawDescGZIP(), []int{5}
+	return file_proto_action_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *Notification) GetNotification() string {
@@ -462,53 +309,236 @@ func (x *Notification) GetNotification() string {
 	return ""
 }
 
+type Action_ActionOption struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Id          int32  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	Name        string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	Description string `protobuf:"bytes,4,opt,name=description,proto3" json:"description,omitempty"`
+	Selected    bool   `protobuf:"varint,5,opt,name=selected,proto3" json:"selected,omitempty"`
+	Disabled    bool   `protobuf:"varint,6,opt,name=disabled,proto3" json:"disabled,omitempty"`
+}
+
+func (x *Action_ActionOption) Reset() {
+	*x = Action_ActionOption{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_proto_action_proto_msgTypes[3]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *Action_ActionOption) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Action_ActionOption) ProtoMessage() {}
+
+func (x *Action_ActionOption) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_action_proto_msgTypes[3]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Action_ActionOption.ProtoReflect.Descriptor instead.
+func (*Action_ActionOption) Descriptor() ([]byte, []int) {
+	return file_proto_action_proto_rawDescGZIP(), []int{0, 0}
+}
+
+func (x *Action_ActionOption) GetId() int32 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+func (x *Action_ActionOption) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *Action_ActionOption) GetDescription() string {
+	if x != nil {
+		return x.Description
+	}
+	return ""
+}
+
+func (x *Action_ActionOption) GetSelected() bool {
+	if x != nil {
+		return x.Selected
+	}
+	return false
+}
+
+func (x *Action_ActionOption) GetDisabled() bool {
+	if x != nil {
+		return x.Disabled
+	}
+	return false
+}
+
+type Action_SelectCard struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Options []*Action_SelectCard_Option `protobuf:"bytes,1,rep,name=options,proto3" json:"options,omitempty"`
+}
+
+func (x *Action_SelectCard) Reset() {
+	*x = Action_SelectCard{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_proto_action_proto_msgTypes[4]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *Action_SelectCard) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Action_SelectCard) ProtoMessage() {}
+
+func (x *Action_SelectCard) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_action_proto_msgTypes[4]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Action_SelectCard.ProtoReflect.Descriptor instead.
+func (*Action_SelectCard) Descriptor() ([]byte, []int) {
+	return file_proto_action_proto_rawDescGZIP(), []int{0, 1}
+}
+
+func (x *Action_SelectCard) GetOptions() []*Action_SelectCard_Option {
+	if x != nil {
+		return x.Options
+	}
+	return nil
+}
+
+type Action_SelectCard_Option struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Option *Action_ActionOption `protobuf:"bytes,1,opt,name=option,proto3" json:"option,omitempty"`
+	Card   *Card                `protobuf:"bytes,2,opt,name=card,proto3" json:"card,omitempty"`
+}
+
+func (x *Action_SelectCard_Option) Reset() {
+	*x = Action_SelectCard_Option{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_proto_action_proto_msgTypes[5]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *Action_SelectCard_Option) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Action_SelectCard_Option) ProtoMessage() {}
+
+func (x *Action_SelectCard_Option) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_action_proto_msgTypes[5]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Action_SelectCard_Option.ProtoReflect.Descriptor instead.
+func (*Action_SelectCard_Option) Descriptor() ([]byte, []int) {
+	return file_proto_action_proto_rawDescGZIP(), []int{0, 1, 0}
+}
+
+func (x *Action_SelectCard_Option) GetOption() *Action_ActionOption {
+	if x != nil {
+		return x.Option
+	}
+	return nil
+}
+
+func (x *Action_SelectCard_Option) GetCard() *Card {
+	if x != nil {
+		return x.Card
+	}
+	return nil
+}
+
 var File_proto_action_proto protoreflect.FileDescriptor
 
 var file_proto_action_proto_rawDesc = []byte{
 	0x0a, 0x12, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x2f, 0x61, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x2e, 0x70,
 	0x72, 0x6f, 0x74, 0x6f, 0x12, 0x05, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x1a, 0x10, 0x70, 0x72, 0x6f,
-	0x74, 0x6f, 0x2f, 0x63, 0x61, 0x72, 0x64, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x22, 0x45, 0x0a,
-	0x06, 0x41, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x12, 0x31, 0x0a, 0x06, 0x61, 0x63, 0x74, 0x69, 0x6f,
-	0x6e, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x17, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x2e,
-	0x53, 0x65, 0x6c, 0x65, 0x63, 0x74, 0x43, 0x61, 0x72, 0x64, 0x41, 0x63, 0x74, 0x69, 0x6f, 0x6e,
-	0x48, 0x00, 0x52, 0x06, 0x61, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x42, 0x08, 0x0a, 0x06, 0x6f, 0x70,
-	0x74, 0x69, 0x6f, 0x6e, 0x22, 0x45, 0x0a, 0x10, 0x53, 0x65, 0x6c, 0x65, 0x63, 0x74, 0x43, 0x61,
-	0x72, 0x64, 0x41, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x12, 0x31, 0x0a, 0x07, 0x6f, 0x70, 0x74, 0x69,
-	0x6f, 0x6e, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x17, 0x2e, 0x70, 0x72, 0x6f, 0x74,
-	0x6f, 0x2e, 0x53, 0x65, 0x6c, 0x65, 0x63, 0x74, 0x43, 0x61, 0x72, 0x64, 0x4f, 0x70, 0x74, 0x69,
-	0x6f, 0x6e, 0x52, 0x07, 0x6f, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x22, 0x60, 0x0a, 0x10, 0x53,
-	0x65, 0x6c, 0x65, 0x63, 0x74, 0x43, 0x61, 0x72, 0x64, 0x4f, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x12,
-	0x2b, 0x0a, 0x06, 0x6f, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32,
-	0x13, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x2e, 0x41, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x4f, 0x70,
-	0x74, 0x69, 0x6f, 0x6e, 0x52, 0x06, 0x6f, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x12, 0x1f, 0x0a, 0x04,
-	0x63, 0x61, 0x72, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x0b, 0x2e, 0x70, 0x72, 0x6f,
-	0x74, 0x6f, 0x2e, 0x43, 0x61, 0x72, 0x64, 0x52, 0x04, 0x63, 0x61, 0x72, 0x64, 0x22, 0x8c, 0x01,
-	0x0a, 0x0c, 0x41, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x4f, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x12, 0x0e,
-	0x0a, 0x02, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x04, 0x52, 0x02, 0x69, 0x64, 0x12, 0x12,
-	0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x6e, 0x61,
-	0x6d, 0x65, 0x12, 0x20, 0x0a, 0x0b, 0x64, 0x65, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x69, 0x6f,
-	0x6e, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x64, 0x65, 0x73, 0x63, 0x72, 0x69, 0x70,
-	0x74, 0x69, 0x6f, 0x6e, 0x12, 0x1a, 0x0a, 0x08, 0x73, 0x65, 0x6c, 0x65, 0x63, 0x74, 0x65, 0x64,
-	0x18, 0x05, 0x20, 0x01, 0x28, 0x08, 0x52, 0x08, 0x73, 0x65, 0x6c, 0x65, 0x63, 0x74, 0x65, 0x64,
-	0x12, 0x1a, 0x0a, 0x08, 0x64, 0x69, 0x73, 0x61, 0x62, 0x6c, 0x65, 0x64, 0x18, 0x06, 0x20, 0x01,
-	0x28, 0x08, 0x52, 0x08, 0x64, 0x69, 0x73, 0x61, 0x62, 0x6c, 0x65, 0x64, 0x22, 0x49, 0x0a, 0x0c,
-	0x41, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x12, 0x0e, 0x0a, 0x02,
-	0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x04, 0x52, 0x02, 0x69, 0x64, 0x12, 0x29, 0x0a, 0x06,
-	0x61, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0e, 0x32, 0x11, 0x2e, 0x70,
-	0x72, 0x6f, 0x74, 0x6f, 0x2e, 0x55, 0x73, 0x65, 0x72, 0x41, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x52,
-	0x06, 0x61, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x22, 0x32, 0x0a, 0x0c, 0x4e, 0x6f, 0x74, 0x69, 0x66,
-	0x69, 0x63, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x12, 0x22, 0x0a, 0x0c, 0x6e, 0x6f, 0x74, 0x69, 0x66,
-	0x69, 0x63, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0c, 0x6e,
-	0x6f, 0x74, 0x69, 0x66, 0x69, 0x63, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x2a, 0x16, 0x0a, 0x0a, 0x41,
-	0x63, 0x74, 0x69, 0x6f, 0x6e, 0x54, 0x79, 0x70, 0x65, 0x12, 0x08, 0x0a, 0x04, 0x4d, 0x41, 0x49,
-	0x4e, 0x10, 0x00, 0x2a, 0x33, 0x0a, 0x0a, 0x55, 0x73, 0x65, 0x72, 0x41, 0x63, 0x74, 0x69, 0x6f,
-	0x6e, 0x12, 0x0b, 0x0a, 0x07, 0x50, 0x52, 0x49, 0x4d, 0x41, 0x52, 0x59, 0x10, 0x00, 0x12, 0x0d,
-	0x0a, 0x09, 0x53, 0x45, 0x43, 0x4f, 0x4e, 0x44, 0x41, 0x52, 0x59, 0x10, 0x01, 0x12, 0x09, 0x0a,
-	0x05, 0x46, 0x4f, 0x43, 0x55, 0x53, 0x10, 0x02, 0x42, 0x35, 0x5a, 0x33, 0x67, 0x69, 0x74, 0x68,
-	0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x6f, 0x68, 0x61, 0x6e, 0x61, 0x6e, 0x2f, 0x63, 0x61,
-	0x72, 0x64, 0x5f, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x2f, 0x70, 0x6b, 0x67, 0x2f, 0x70, 0x72, 0x6f,
-	0x74, 0x6f, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x2f, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62,
-	0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x74, 0x6f, 0x2f, 0x63, 0x61, 0x72, 0x64, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x22, 0x9e, 0x03,
+	0x0a, 0x06, 0x41, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x12, 0x2e, 0x0a, 0x04, 0x63, 0x61, 0x72, 0x64,
+	0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x18, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x2e, 0x41,
+	0x63, 0x74, 0x69, 0x6f, 0x6e, 0x2e, 0x53, 0x65, 0x6c, 0x65, 0x63, 0x74, 0x43, 0x61, 0x72, 0x64,
+	0x48, 0x00, 0x52, 0x04, 0x63, 0x61, 0x72, 0x64, 0x12, 0x10, 0x0a, 0x02, 0x78, 0x78, 0x18, 0x02,
+	0x20, 0x01, 0x28, 0x05, 0x48, 0x00, 0x52, 0x02, 0x78, 0x78, 0x12, 0x10, 0x0a, 0x02, 0x79, 0x79,
+	0x18, 0x03, 0x20, 0x01, 0x28, 0x05, 0x48, 0x00, 0x52, 0x02, 0x79, 0x79, 0x1a, 0x8c, 0x01, 0x0a,
+	0x0c, 0x41, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x4f, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x12, 0x0e, 0x0a,
+	0x02, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x02, 0x69, 0x64, 0x12, 0x12, 0x0a,
+	0x04, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x6e, 0x61, 0x6d,
+	0x65, 0x12, 0x20, 0x0a, 0x0b, 0x64, 0x65, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x69, 0x6f, 0x6e,
+	0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x64, 0x65, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74,
+	0x69, 0x6f, 0x6e, 0x12, 0x1a, 0x0a, 0x08, 0x73, 0x65, 0x6c, 0x65, 0x63, 0x74, 0x65, 0x64, 0x18,
+	0x05, 0x20, 0x01, 0x28, 0x08, 0x52, 0x08, 0x73, 0x65, 0x6c, 0x65, 0x63, 0x74, 0x65, 0x64, 0x12,
+	0x1a, 0x0a, 0x08, 0x64, 0x69, 0x73, 0x61, 0x62, 0x6c, 0x65, 0x64, 0x18, 0x06, 0x20, 0x01, 0x28,
+	0x08, 0x52, 0x08, 0x64, 0x69, 0x73, 0x61, 0x62, 0x6c, 0x65, 0x64, 0x1a, 0xa6, 0x01, 0x0a, 0x0a,
+	0x53, 0x65, 0x6c, 0x65, 0x63, 0x74, 0x43, 0x61, 0x72, 0x64, 0x12, 0x39, 0x0a, 0x07, 0x6f, 0x70,
+	0x74, 0x69, 0x6f, 0x6e, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x1f, 0x2e, 0x70, 0x72,
+	0x6f, 0x74, 0x6f, 0x2e, 0x41, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x2e, 0x53, 0x65, 0x6c, 0x65, 0x63,
+	0x74, 0x43, 0x61, 0x72, 0x64, 0x2e, 0x4f, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x07, 0x6f, 0x70,
+	0x74, 0x69, 0x6f, 0x6e, 0x73, 0x1a, 0x5d, 0x0a, 0x06, 0x4f, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x12,
+	0x32, 0x0a, 0x06, 0x6f, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32,
+	0x1a, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x2e, 0x41, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x2e, 0x41,
+	0x63, 0x74, 0x69, 0x6f, 0x6e, 0x4f, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x06, 0x6f, 0x70, 0x74,
+	0x69, 0x6f, 0x6e, 0x12, 0x1f, 0x0a, 0x04, 0x63, 0x61, 0x72, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28,
+	0x0b, 0x32, 0x0b, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x2e, 0x43, 0x61, 0x72, 0x64, 0x52, 0x04,
+	0x63, 0x61, 0x72, 0x64, 0x42, 0x08, 0x0a, 0x06, 0x6f, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x22, 0x49,
+	0x0a, 0x0c, 0x41, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x12, 0x0e,
+	0x0a, 0x02, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x02, 0x69, 0x64, 0x12, 0x29,
+	0x0a, 0x04, 0x74, 0x79, 0x70, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0e, 0x32, 0x15, 0x2e, 0x70,
+	0x72, 0x6f, 0x74, 0x6f, 0x2e, 0x55, 0x73, 0x65, 0x72, 0x41, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x54,
+	0x79, 0x70, 0x65, 0x52, 0x04, 0x74, 0x79, 0x70, 0x65, 0x22, 0x32, 0x0a, 0x0c, 0x4e, 0x6f, 0x74,
+	0x69, 0x66, 0x69, 0x63, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x12, 0x22, 0x0a, 0x0c, 0x6e, 0x6f, 0x74,
+	0x69, 0x66, 0x69, 0x63, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x0c, 0x6e, 0x6f, 0x74, 0x69, 0x66, 0x69, 0x63, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x2a, 0x16, 0x0a,
+	0x0a, 0x41, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x54, 0x79, 0x70, 0x65, 0x12, 0x08, 0x0a, 0x04, 0x4d,
+	0x41, 0x49, 0x4e, 0x10, 0x00, 0x2a, 0x37, 0x0a, 0x0e, 0x55, 0x73, 0x65, 0x72, 0x41, 0x63, 0x74,
+	0x69, 0x6f, 0x6e, 0x54, 0x79, 0x70, 0x65, 0x12, 0x0b, 0x0a, 0x07, 0x50, 0x52, 0x49, 0x4d, 0x41,
+	0x52, 0x59, 0x10, 0x00, 0x12, 0x0d, 0x0a, 0x09, 0x53, 0x45, 0x43, 0x4f, 0x4e, 0x44, 0x41, 0x52,
+	0x59, 0x10, 0x01, 0x12, 0x09, 0x0a, 0x05, 0x46, 0x4f, 0x43, 0x55, 0x53, 0x10, 0x02, 0x42, 0x35,
+	0x5a, 0x33, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x6f, 0x68, 0x61,
+	0x6e, 0x61, 0x6e, 0x2f, 0x63, 0x61, 0x72, 0x64, 0x5f, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x2f, 0x70,
+	0x6b, 0x67, 0x2f, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x2f,
+	0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -526,22 +556,22 @@ func file_proto_action_proto_rawDescGZIP() []byte {
 var file_proto_action_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
 var file_proto_action_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
 var file_proto_action_proto_goTypes = []interface{}{
-	(ActionType)(0),          // 0: proto.ActionType
-	(UserAction)(0),          // 1: proto.UserAction
-	(*Action)(nil),           // 2: proto.Action
-	(*SelectCardAction)(nil), // 3: proto.SelectCardAction
-	(*SelectCardOption)(nil), // 4: proto.SelectCardOption
-	(*ActionOption)(nil),     // 5: proto.ActionOption
-	(*ActionResult)(nil),     // 6: proto.ActionResult
-	(*Notification)(nil),     // 7: proto.Notification
-	(*Card)(nil),             // 8: proto.Card
+	(ActionType)(0),                  // 0: proto.ActionType
+	(UserActionType)(0),              // 1: proto.UserActionType
+	(*Action)(nil),                   // 2: proto.Action
+	(*ActionResult)(nil),             // 3: proto.ActionResult
+	(*Notification)(nil),             // 4: proto.Notification
+	(*Action_ActionOption)(nil),      // 5: proto.Action.ActionOption
+	(*Action_SelectCard)(nil),        // 6: proto.Action.SelectCard
+	(*Action_SelectCard_Option)(nil), // 7: proto.Action.SelectCard.Option
+	(*Card)(nil),                     // 8: proto.Card
 }
 var file_proto_action_proto_depIdxs = []int32{
-	3, // 0: proto.Action.action:type_name -> proto.SelectCardAction
-	4, // 1: proto.SelectCardAction.options:type_name -> proto.SelectCardOption
-	5, // 2: proto.SelectCardOption.option:type_name -> proto.ActionOption
-	8, // 3: proto.SelectCardOption.card:type_name -> proto.Card
-	1, // 4: proto.ActionResult.action:type_name -> proto.UserAction
+	6, // 0: proto.Action.card:type_name -> proto.Action.SelectCard
+	1, // 1: proto.ActionResult.type:type_name -> proto.UserActionType
+	7, // 2: proto.Action.SelectCard.options:type_name -> proto.Action.SelectCard.Option
+	5, // 3: proto.Action.SelectCard.Option.option:type_name -> proto.Action.ActionOption
+	8, // 4: proto.Action.SelectCard.Option.card:type_name -> proto.Card
 	5, // [5:5] is the sub-list for method output_type
 	5, // [5:5] is the sub-list for method input_type
 	5, // [5:5] is the sub-list for extension type_name
@@ -569,42 +599,6 @@ func file_proto_action_proto_init() {
 			}
 		}
 		file_proto_action_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*SelectCardAction); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_proto_action_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*SelectCardOption); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_proto_action_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ActionOption); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_proto_action_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*ActionResult); i {
 			case 0:
 				return &v.state
@@ -616,8 +610,44 @@ func file_proto_action_proto_init() {
 				return nil
 			}
 		}
-		file_proto_action_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
+		file_proto_action_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*Notification); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_proto_action_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*Action_ActionOption); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_proto_action_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*Action_SelectCard); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_proto_action_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*Action_SelectCard_Option); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -630,7 +660,9 @@ func file_proto_action_proto_init() {
 		}
 	}
 	file_proto_action_proto_msgTypes[0].OneofWrappers = []interface{}{
-		(*Action_Action)(nil),
+		(*Action_Card)(nil),
+		(*Action_Xx)(nil),
+		(*Action_Yy)(nil),
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{

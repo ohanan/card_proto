@@ -22,7 +22,23 @@ func main() {
 
 // generateFile generates a _ascii.pb.go file containing gRPC service definitions.
 func generateFile(gen *protogen.Plugin, file *protogen.File) {
-	if len(file.Services) == 0 {
+	var existOneOf bool
+	var checkOneOf func(messages []*protogen.Message) bool
+	checkOneOf = func(messages []*protogen.Message) bool {
+		if existOneOf {
+			return true
+		}
+		for _, message := range messages {
+			if len(message.Oneofs) > 0 {
+				return true
+			}
+			if checkOneOf(message.Messages) {
+				return true
+			}
+		}
+		return false
+	}
+	if !checkOneOf(file.Messages) && len(file.Services) == 0 {
 		return
 	}
 	filename := file.GeneratedFilenamePrefix + "_custom.pb.go"
@@ -39,6 +55,22 @@ func generateFile(gen *protogen.Plugin, file *protogen.File) {
 	g.P()
 	g.P("package ", file.GoPackageName)
 	g.P()
+	for _, message := range file.Messages {
+		for _, oneof := range message.Oneofs {
+			for _, field := range oneof.Fields {
+				goType, pointer := fieldGoType(g, field)
+				if pointer {
+					// goType = "*" + goType
+				}
+				g.P("func(x *", message.GoIdent, ") With", field.GoName, "(v ", goType, ")*", message.GoIdent, "{")
+				g.P("x.", oneof.GoName, " = &", field.GoIdent, "{")
+				g.P(field.GoName, ": v,")
+				g.P("}")
+				g.P("return x")
+				g.P("}")
+			}
+		}
+	}
 	for _, service := range file.Services {
 		serviceName := service.GoName
 		isPlugin := serviceName == "Plugin"

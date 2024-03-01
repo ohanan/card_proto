@@ -130,9 +130,10 @@ func (x PluginXClient) GetPluginInfo0(req *proto.GetPluginInfo_Req) *proto.GetPl
 	}
 	return r
 }
-func (x PluginXClient) StartMode(name string) *proto.StartMode_Resp {
+func (x PluginXClient) StartMode(name string, seed uint64) *proto.StartMode_Resp {
 	r, err := x.c.StartMode(context.Background(), &proto.StartMode_Req{
 		Name: name,
+		Seed: seed,
 	})
 	if err != nil {
 		panic(err)

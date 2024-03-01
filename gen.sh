@@ -2,6 +2,7 @@
 rm -rf ./pkg/protoservice/proto
 rm ./pkg/protoservice/*.pb.go
 go run ./cmd/prepare
+go install ./cmd/protoc-gen-card-proto-plugin
 buf format -w
 protoc \
   --go_out=pkg/protoservice \

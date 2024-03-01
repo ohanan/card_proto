@@ -1,42 +1,25 @@
 package protoservice
 
 import (
-	"sync/atomic"
-
-	"github.com/ohanan/card_proto/pkg/protoservice/proto"
+	"math/rand/v2"
 )
 
+func TyrInitHelper(hostServer HostServer, pluginServer PluginServer) {
+	if x, ok := pluginServer.(*pluginXServerAdapter); ok {
+		x.InitHelper(NewHostXClient(NewHostClientFromServer(hostServer)))
+	}
+}
 func (x *pluginXServerAdapter) InitHelper(c *HostXClient) {
 	x.Helper = &Helper{HostXClient: c}
 }
 
 type Helper struct {
 	*HostXClient
-	thisID uint64
 }
 
-func (h *Helper) NextID() uint64 {
-	return atomic.AddUint64(&h.thisID, 1)
-}
-func (h *Helper) NewOptionBuilder(action *proto.Action) *OptionBuilder {
-	return &OptionBuilder{
-		helper:      h,
-		onSelectMap: map[uint64]func(){},
-	}
-}
+func (h *Helper) NewRand(seed uint64) *Rand { return rand.New(uint64Value(seed)) }
 
-type OptionBuilder struct {
-	helper      *Helper
-	onSelectMap map[uint64]func()
-}
+type Rand = rand.Rand
+type uint64Value uint64
 
-func (ab *OptionBuilder) ID(onSelect func(action proto.UserAction)) *OptionBuilder {
-	option.Id = ab.helper.NextID()
-	ab.action.Options = append(ab.action.Options, option)
-	ab.onSelectMap[option.Id] = onSelect
-	return ab
-}
-
-func (ab *OptionBuilder) Wait() {
-	ab.onSelectMap[ab.helper.AskAction(ab.action).Result.Id]()
-}
+func (u uint64Value) Uint64() uint64 { return uint64(u) }
