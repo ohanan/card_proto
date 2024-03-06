@@ -8,15 +8,9 @@ func (x *Action) WithCard(v *Action_SelectCard) *Action {
 	}
 	return x
 }
-func (x *Action) WithXx(v int32) *Action {
-	x.Option = &Action_Xx{
-		Xx: v,
-	}
-	return x
-}
-func (x *Action) WithYy(v int32) *Action {
-	x.Option = &Action_Yy{
-		Yy: v,
+func (x *Action) WithWait(v *Action_WaitPlayer) *Action {
+	x.Option = &Action_Wait{
+		Wait: v,
 	}
 	return x
 }

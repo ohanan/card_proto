@@ -27,8 +27,10 @@ message Action {
     }
     repeated Option options = 1;
   }
+  message WaitPlayer {}
   oneof option {
     SelectCard card = 1;
+    WaitPlayer wait = 2;
   }
 }
 

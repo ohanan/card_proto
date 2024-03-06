@@ -47,8 +47,9 @@ func (x HostXClient) RegisterNotify0(req *proto.RegisterNotify_Req) *proto.Regis
 	}
 	return r
 }
-func (x HostXClient) AskAction(actions []*proto.Action) *proto.AskAction_Resp {
+func (x HostXClient) AskAction(userId string, actions []*proto.Action) *proto.AskAction_Resp {
 	r, err := x.c.AskAction(context.Background(), &proto.AskAction_Req{
+		UserId:  userId,
 		Actions: actions,
 	})
 	if err != nil {
@@ -130,8 +131,8 @@ func (x PluginXClient) GetPluginInfo0(req *proto.GetPluginInfo_Req) *proto.GetPl
 	}
 	return r
 }
-func (x PluginXClient) StartMode(name string, seed uint64) *proto.StartMode_Resp {
-	r, err := x.c.StartMode(context.Background(), &proto.StartMode_Req{
+func (x PluginXClient) StartGame(name string, seed uint64) *proto.StartGame_Resp {
+	r, err := x.c.StartGame(context.Background(), &proto.StartGame_Req{
 		Name: name,
 		Seed: seed,
 	})
@@ -140,8 +141,8 @@ func (x PluginXClient) StartMode(name string, seed uint64) *proto.StartMode_Resp
 	}
 	return r
 }
-func (x PluginXClient) StartMode0(req *proto.StartMode_Req) *proto.StartMode_Resp {
-	r, err := x.c.StartMode(context.Background(), req)
+func (x PluginXClient) StartGame0(req *proto.StartGame_Req) *proto.StartGame_Resp {
+	r, err := x.c.StartGame(context.Background(), req)
 	if err != nil {
 		panic(err)
 	}
@@ -150,7 +151,7 @@ func (x PluginXClient) StartMode0(req *proto.StartMode_Req) *proto.StartMode_Res
 
 type PluginXServer interface {
 	GetPluginInfo(helper *Helper, req *proto.GetPluginInfo_Req, resp *proto.GetPluginInfo_Resp)
-	StartMode(helper *Helper, req *proto.StartMode_Req, resp *proto.StartMode_Resp)
+	StartGame(helper *Helper, req *proto.StartGame_Req, resp *proto.StartGame_Resp)
 }
 
 func NewPluginClientFromServer(x PluginServer) PluginClient {
@@ -162,8 +163,8 @@ type pluginClientByServer struct{ s PluginServer }
 func (x pluginClientByServer) GetPluginInfo(ctx context.Context, req *proto.GetPluginInfo_Req, opts ...grpc.CallOption) (*proto.GetPluginInfo_Resp, error) {
 	return x.s.GetPluginInfo(ctx, req)
 }
-func (x pluginClientByServer) StartMode(ctx context.Context, req *proto.StartMode_Req, opts ...grpc.CallOption) (*proto.StartMode_Resp, error) {
-	return x.s.StartMode(ctx, req)
+func (x pluginClientByServer) StartGame(ctx context.Context, req *proto.StartGame_Req, opts ...grpc.CallOption) (*proto.StartGame_Resp, error) {
+	return x.s.StartGame(ctx, req)
 }
 func NewPluginServerFromXServer(server PluginXServer) PluginServer {
 	return &pluginXServerAdapter{Server: server}
@@ -179,8 +180,8 @@ func (x *pluginXServerAdapter) GetPluginInfo(ctx context.Context, req *proto.Get
 	x.Server.GetPluginInfo(x.Helper, req, resp)
 	return resp, nil
 }
-func (x *pluginXServerAdapter) StartMode(ctx context.Context, req *proto.StartMode_Req) (*proto.StartMode_Resp, error) {
-	resp := &proto.StartMode_Resp{}
-	x.Server.StartMode(x.Helper, req, resp)
+func (x *pluginXServerAdapter) StartGame(ctx context.Context, req *proto.StartGame_Req) (*proto.StartGame_Resp, error) {
+	resp := &proto.StartGame_Resp{}
+	x.Server.StartGame(x.Helper, req, resp)
 	return resp, nil
 }

@@ -58,14 +58,14 @@ func (*GetPluginInfo) Descriptor() ([]byte, []int) {
 	return file_proto_plugin_methods_proto_rawDescGZIP(), []int{0}
 }
 
-type StartMode struct {
+type StartGame struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 }
 
-func (x *StartMode) Reset() {
-	*x = StartMode{}
+func (x *StartGame) Reset() {
+	*x = StartGame{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_proto_plugin_methods_proto_msgTypes[1]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -73,13 +73,13 @@ func (x *StartMode) Reset() {
 	}
 }
 
-func (x *StartMode) String() string {
+func (x *StartGame) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*StartMode) ProtoMessage() {}
+func (*StartGame) ProtoMessage() {}
 
-func (x *StartMode) ProtoReflect() protoreflect.Message {
+func (x *StartGame) ProtoReflect() protoreflect.Message {
 	mi := &file_proto_plugin_methods_proto_msgTypes[1]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -91,8 +91,8 @@ func (x *StartMode) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use StartMode.ProtoReflect.Descriptor instead.
-func (*StartMode) Descriptor() ([]byte, []int) {
+// Deprecated: Use StartGame.ProtoReflect.Descriptor instead.
+func (*StartGame) Descriptor() ([]byte, []int) {
 	return file_proto_plugin_methods_proto_rawDescGZIP(), []int{1}
 }
 
@@ -181,7 +181,7 @@ func (x *GetPluginInfo_Resp) GetInfo() *PluginInfo {
 	return nil
 }
 
-type StartMode_Req struct {
+type StartGame_Req struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
@@ -190,8 +190,8 @@ type StartMode_Req struct {
 	Seed uint64 `protobuf:"varint,2,opt,name=seed,proto3" json:"seed,omitempty"`
 }
 
-func (x *StartMode_Req) Reset() {
-	*x = StartMode_Req{}
+func (x *StartGame_Req) Reset() {
+	*x = StartGame_Req{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_proto_plugin_methods_proto_msgTypes[4]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -199,13 +199,13 @@ func (x *StartMode_Req) Reset() {
 	}
 }
 
-func (x *StartMode_Req) String() string {
+func (x *StartGame_Req) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*StartMode_Req) ProtoMessage() {}
+func (*StartGame_Req) ProtoMessage() {}
 
-func (x *StartMode_Req) ProtoReflect() protoreflect.Message {
+func (x *StartGame_Req) ProtoReflect() protoreflect.Message {
 	mi := &file_proto_plugin_methods_proto_msgTypes[4]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -217,33 +217,33 @@ func (x *StartMode_Req) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use StartMode_Req.ProtoReflect.Descriptor instead.
-func (*StartMode_Req) Descriptor() ([]byte, []int) {
+// Deprecated: Use StartGame_Req.ProtoReflect.Descriptor instead.
+func (*StartGame_Req) Descriptor() ([]byte, []int) {
 	return file_proto_plugin_methods_proto_rawDescGZIP(), []int{1, 0}
 }
 
-func (x *StartMode_Req) GetName() string {
+func (x *StartGame_Req) GetName() string {
 	if x != nil {
 		return x.Name
 	}
 	return ""
 }
 
-func (x *StartMode_Req) GetSeed() uint64 {
+func (x *StartGame_Req) GetSeed() uint64 {
 	if x != nil {
 		return x.Seed
 	}
 	return 0
 }
 
-type StartMode_Resp struct {
+type StartGame_Resp struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 }
 
-func (x *StartMode_Resp) Reset() {
-	*x = StartMode_Resp{}
+func (x *StartGame_Resp) Reset() {
+	*x = StartGame_Resp{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_proto_plugin_methods_proto_msgTypes[5]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -251,13 +251,13 @@ func (x *StartMode_Resp) Reset() {
 	}
 }
 
-func (x *StartMode_Resp) String() string {
+func (x *StartGame_Resp) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*StartMode_Resp) ProtoMessage() {}
+func (*StartGame_Resp) ProtoMessage() {}
 
-func (x *StartMode_Resp) ProtoReflect() protoreflect.Message {
+func (x *StartGame_Resp) ProtoReflect() protoreflect.Message {
 	mi := &file_proto_plugin_methods_proto_msgTypes[5]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -269,8 +269,8 @@ func (x *StartMode_Resp) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use StartMode_Resp.ProtoReflect.Descriptor instead.
-func (*StartMode_Resp) Descriptor() ([]byte, []int) {
+// Deprecated: Use StartGame_Resp.ProtoReflect.Descriptor instead.
+func (*StartGame_Resp) Descriptor() ([]byte, []int) {
 	return file_proto_plugin_methods_proto_rawDescGZIP(), []int{1, 1}
 }
 
@@ -285,7 +285,7 @@ var file_proto_plugin_methods_proto_rawDesc = []byte{
 	0x2d, 0x0a, 0x04, 0x52, 0x65, 0x73, 0x70, 0x12, 0x25, 0x0a, 0x04, 0x69, 0x6e, 0x66, 0x6f, 0x18,
 	0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x11, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x2e, 0x50, 0x6c,
 	0x75, 0x67, 0x69, 0x6e, 0x49, 0x6e, 0x66, 0x6f, 0x52, 0x04, 0x69, 0x6e, 0x66, 0x6f, 0x22, 0x42,
-	0x0a, 0x09, 0x53, 0x74, 0x61, 0x72, 0x74, 0x4d, 0x6f, 0x64, 0x65, 0x1a, 0x2d, 0x0a, 0x03, 0x52,
+	0x0a, 0x09, 0x53, 0x74, 0x61, 0x72, 0x74, 0x47, 0x61, 0x6d, 0x65, 0x1a, 0x2d, 0x0a, 0x03, 0x52,
 	0x65, 0x71, 0x12, 0x12, 0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09,
 	0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x12, 0x12, 0x0a, 0x04, 0x73, 0x65, 0x65, 0x64, 0x18, 0x02,
 	0x20, 0x01, 0x28, 0x04, 0x52, 0x04, 0x73, 0x65, 0x65, 0x64, 0x1a, 0x06, 0x0a, 0x04, 0x52, 0x65,
@@ -311,11 +311,11 @@ func file_proto_plugin_methods_proto_rawDescGZIP() []byte {
 var file_proto_plugin_methods_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
 var file_proto_plugin_methods_proto_goTypes = []interface{}{
 	(*GetPluginInfo)(nil),      // 0: proto.GetPluginInfo
-	(*StartMode)(nil),          // 1: proto.StartMode
+	(*StartGame)(nil),          // 1: proto.StartGame
 	(*GetPluginInfo_Req)(nil),  // 2: proto.GetPluginInfo.Req
 	(*GetPluginInfo_Resp)(nil), // 3: proto.GetPluginInfo.Resp
-	(*StartMode_Req)(nil),      // 4: proto.StartMode.Req
-	(*StartMode_Resp)(nil),     // 5: proto.StartMode.Resp
+	(*StartGame_Req)(nil),      // 4: proto.StartGame.Req
+	(*StartGame_Resp)(nil),     // 5: proto.StartGame.Resp
 	(*PluginInfo)(nil),         // 6: proto.PluginInfo
 }
 var file_proto_plugin_methods_proto_depIdxs = []int32{
@@ -347,7 +347,7 @@ func file_proto_plugin_methods_proto_init() {
 			}
 		}
 		file_proto_plugin_methods_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*StartMode); i {
+			switch v := v.(*StartGame); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -383,7 +383,7 @@ func file_proto_plugin_methods_proto_init() {
 			}
 		}
 		file_proto_plugin_methods_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*StartMode_Req); i {
+			switch v := v.(*StartGame_Req); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -395,7 +395,7 @@ func file_proto_plugin_methods_proto_init() {
 			}
 		}
 		file_proto_plugin_methods_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*StartMode_Resp); i {
+			switch v := v.(*StartGame_Resp); i {
 			case 0:
 				return &v.state
 			case 1:

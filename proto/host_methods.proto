@@ -23,7 +23,8 @@ message RegisterNotify {
 
 message AskAction {
   message Req {
-    repeated Action actions = 1;
+    string user_id = 1;
+    repeated Action actions = 2;
   }
   message Resp {
     ActionResult result = 1;

@@ -183,7 +183,7 @@ var Host_ServiceDesc = grpc.ServiceDesc{
 
 const (
 	Plugin_GetPluginInfo_FullMethodName = "/proto.Plugin/GetPluginInfo"
-	Plugin_StartMode_FullMethodName     = "/proto.Plugin/StartMode"
+	Plugin_StartGame_FullMethodName     = "/proto.Plugin/StartGame"
 )
 
 // PluginClient is the client API for Plugin service.
@@ -191,7 +191,7 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type PluginClient interface {
 	GetPluginInfo(ctx context.Context, in *proto.GetPluginInfo_Req, opts ...grpc.CallOption) (*proto.GetPluginInfo_Resp, error)
-	StartMode(ctx context.Context, in *proto.StartMode_Req, opts ...grpc.CallOption) (*proto.StartMode_Resp, error)
+	StartGame(ctx context.Context, in *proto.StartGame_Req, opts ...grpc.CallOption) (*proto.StartGame_Resp, error)
 }
 
 type pluginClient struct {
@@ -211,9 +211,9 @@ func (c *pluginClient) GetPluginInfo(ctx context.Context, in *proto.GetPluginInf
 	return out, nil
 }
 
-func (c *pluginClient) StartMode(ctx context.Context, in *proto.StartMode_Req, opts ...grpc.CallOption) (*proto.StartMode_Resp, error) {
-	out := new(proto.StartMode_Resp)
-	err := c.cc.Invoke(ctx, Plugin_StartMode_FullMethodName, in, out, opts...)
+func (c *pluginClient) StartGame(ctx context.Context, in *proto.StartGame_Req, opts ...grpc.CallOption) (*proto.StartGame_Resp, error) {
+	out := new(proto.StartGame_Resp)
+	err := c.cc.Invoke(ctx, Plugin_StartGame_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -225,7 +225,7 @@ func (c *pluginClient) StartMode(ctx context.Context, in *proto.StartMode_Req, o
 // for forward compatibility
 type PluginServer interface {
 	GetPluginInfo(context.Context, *proto.GetPluginInfo_Req) (*proto.GetPluginInfo_Resp, error)
-	StartMode(context.Context, *proto.StartMode_Req) (*proto.StartMode_Resp, error)
+	StartGame(context.Context, *proto.StartGame_Req) (*proto.StartGame_Resp, error)
 }
 
 // UnimplementedPluginServer should be embedded to have forward compatible implementations.
@@ -235,8 +235,8 @@ type UnimplementedPluginServer struct {
 func (UnimplementedPluginServer) GetPluginInfo(context.Context, *proto.GetPluginInfo_Req) (*proto.GetPluginInfo_Resp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetPluginInfo not implemented")
 }
-func (UnimplementedPluginServer) StartMode(context.Context, *proto.StartMode_Req) (*proto.StartMode_Resp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method StartMode not implemented")
+func (UnimplementedPluginServer) StartGame(context.Context, *proto.StartGame_Req) (*proto.StartGame_Resp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StartGame not implemented")
 }
 
 // UnsafePluginServer may be embedded to opt out of forward compatibility for this service.
@@ -268,20 +268,20 @@ func _Plugin_GetPluginInfo_Handler(srv interface{}, ctx context.Context, dec fun
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Plugin_StartMode_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(proto.StartMode_Req)
+func _Plugin_StartGame_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(proto.StartGame_Req)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(PluginServer).StartMode(ctx, in)
+		return srv.(PluginServer).StartGame(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Plugin_StartMode_FullMethodName,
+		FullMethod: Plugin_StartGame_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PluginServer).StartMode(ctx, req.(*proto.StartMode_Req))
+		return srv.(PluginServer).StartGame(ctx, req.(*proto.StartGame_Req))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -298,8 +298,8 @@ var Plugin_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Plugin_GetPluginInfo_Handler,
 		},
 		{
-			MethodName: "StartMode",
-			Handler:    _Plugin_StartMode_Handler,
+			MethodName: "StartGame",
+			Handler:    _Plugin_StartGame_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

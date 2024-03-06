@@ -11,7 +11,7 @@ message GetPluginInfo {
     PluginInfo info = 1;
   }
 }
-message StartMode {
+message StartGame {
   message Req {
     string name = 1;
     uint64 seed = 2;

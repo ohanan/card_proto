@@ -14,5 +14,5 @@ service Host {
 
 service Plugin {
   rpc GetPluginInfo(GetPluginInfo.Req) returns (GetPluginInfo.Resp);
-  rpc StartMode(StartMode.Req) returns (StartMode.Resp);
+  rpc StartGame(StartGame.Req) returns (StartGame.Resp);
 }
